@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "properties": {
+      "username":{
+        "type" : "string"
+      },
+      "journal": {
+        "type": "string"
+      }
+    },
+    "required": ["journal"],
+    "additionalProperties": false
+  }
+  
