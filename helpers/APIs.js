@@ -101,21 +101,10 @@ async function runAssistant(threadId, assistantId) {
     assistant_id: assistantId,
   });
 
-  console.log(run.id);
-  console.log(run.id);
-  console.log(threadId);
-  console.log(threadId);
-  console.log(assistantId);
-  console.log(assistantId);
-
   return run.id;
 }
 
 async function getAssistantResponse(threadId, runId) {
-  console.log(`I am here and thread is ${threadId} Run is is ${runId}`);
-  console.log(`I am here and thread is ${threadId} Run is is ${runId}`);
-  console.log(`I am here and thread is ${threadId} Run is is ${runId}`);
-  console.log(`I am here and thread is ${threadId} Run is is ${runId}`);
   let runStatus;
 
   while (true) {
