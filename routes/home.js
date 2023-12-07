@@ -5,7 +5,6 @@ const router = new express.Router();
 
 const { getNews, getDrugInfo } = require("../helpers/APIs");
 const axios = require("axios");
-const Home = require("../models/home");
 
 // routes/home.js
 router.get("/", async function (req, res, next) {
