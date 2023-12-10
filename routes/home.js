@@ -16,9 +16,9 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/search/:drug", async function (req, res, next) {
+router.get("/search", async function (req, res, next) {
   try {
-    const response = await getDrugInfo(req.params.drug);
+    const response = await getDrugInfo(req.query.drug);
     // const {
     //   contraindications,
     //   indications_and_usage,

@@ -110,7 +110,12 @@ router.post(
     }
   }
 );
-
+/** POST /[username]/med_history/:id => { status,start_date, stop_date} 
+   *
+   * Returns  medication_history: { id, username, drug_name,status,start_date, stop_date},{...}] 
+  
+   * Authorization required: admin or same user-as-:username
+   **/
 router.patch(
   "/:username/med_history/:id",
   ensureCorrectUserOrAdmin,
@@ -154,26 +159,47 @@ router.delete(
   }
 );
 
-router.post("/:username/med_history/drug_interaction", async (req, res) => {
-  try {
-    //input {"role":"user",
-    //  "content":"amlodipine colchicine"
-    // } =>  {
-    // 	"drug_interaction": "The drug pair is Amlodipine and Colchicine.\n\nSeverity: Moderate\n\nManagement: Monitor for signs and symptoms of toxicity such as vomiting, diarrhea, and numbness or tingling in the fingers and toes. If you are taking these medications together, your doctor may want to adjust the dose of your colchicine. \n\nPlease discuss this with your physician."
-    // }
+router.post(
+  "/:username/med_history/drug_interaction",
+  ensureCorrectUserOrAdmin,
+  async (req, res) => {
+    try {
+      //input {"role":"user",
+      //  "content":"amlodipine colchicine"
+      // } =>  {
+      // 	"drug_interaction": "The drug pair is Amlodipine and Colchicine.\n\nSeverity: Moderate\n\nManagement: Monitor for signs and symptoms of toxicity such as vomiting, diarrhea, and numbness or tingling in the fingers and toes. If you are taking these medications together, your doctor may want to adjust the dose of your colchicine. \n\nPlease discuss this with your physician."
+      // }
 
-    const { role, content } = req.body;
-    const assistantId = await createDrugInteractionAssistant();
-    const threadId = await createThread();
-    await addMessageToThread(threadId, { role, content });
-    const runId = await runAssistant(threadId, assistantId);
-    const response = await getAssistantResponse(threadId, runId);
+      //create user session
+      const userSessions = new Map();
+      const { role, content } = req.body;
+      const { username } = req.params;
 
-    return res.json({ drug_interaction: response[0].content[0].text.value });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).send("Error processing drug interaction check");
+      //Function to associate current user to newly created assistantID and threadID to ensure the response goes back to the right user
+
+      async function startUserSession(username) {
+        const assistantId = await createDrugInteractionAssistant();
+        const threadId = await createThread();
+        userSessions.set(username, { assistantId, threadId });
+      }
+
+      // Function to retrieve user's assistantId and threadId
+      function getUserSession(username) {
+        return userSessions.get(username);
+      }
+      await startUserSession(username);
+      const { assistantId, threadId } = getUserSession(username);
+      await addMessageToThread(threadId, { role, content });
+
+      const runId = await runAssistant(threadId, assistantId);
+      const response = await getAssistantResponse(threadId, runId);
+
+      return res.json({ drug_interaction: response[0].content[0].text.value });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Error processing drug interaction check");
+    }
   }
-});
+);
 
 module.exports = router;
