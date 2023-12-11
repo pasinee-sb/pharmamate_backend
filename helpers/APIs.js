@@ -12,11 +12,9 @@ async function getNews() {
   try {
     // To query top headlines
     // All options passed to topHeadlines are optional, but you need to include at least one of them
-    const response = newsapi.v2.topHeadlines({
-      q: "drug",
-      category: "health",
+    const response = newsapi.v2.everything({
+      q: "drug OR medication",
       language: "en",
-      country: "us",
     });
     return response;
   } catch (error) {

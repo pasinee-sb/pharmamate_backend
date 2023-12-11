@@ -18,7 +18,7 @@ router.get("/", async function (req, res, next) {
 
 router.get("/search", async function (req, res, next) {
   try {
-    const response = await getDrugInfo(req.query.drug);
+    const drugInfo = await getDrugInfo(req.query.drug);
     // const {
     //   contraindications,
     //   indications_and_usage,
@@ -34,7 +34,7 @@ router.get("/search", async function (req, res, next) {
     //   drug_interactions,
     // });
 
-    return res.json({ response });
+    return res.json({ response: drugInfo });
   } catch (error) {
     next(error);
   }
