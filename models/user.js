@@ -120,14 +120,20 @@ class User {
 
     // Query for user's medication history
     const userMedicationRes = await db.query(
-      `SELECT m.id
+      `SELECT m.id, m.drug_name, m.status, m.start_date, m.stop_date
        FROM medication_history AS m
        WHERE m.username = $1`,
       [username]
     );
 
     // Map over the results to create an array of drug names
-    user.medication_history = userMedicationRes.rows.map((m) => m.id);
+    user.medication_history = userMedicationRes.rows.map((med) => ({
+      id: med.id,
+      drug_name: med.drug_name,
+      status: med.status,
+      start_date: med.start_date,
+      stop_date: med.stop_date,
+    }));
 
     // Query for user's health journals
     const userJournalRes = await db.query(

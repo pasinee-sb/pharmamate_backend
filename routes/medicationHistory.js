@@ -116,7 +116,7 @@ router.post(
   
    * Authorization required: admin or same user-as-:username
    **/
-router.patch(
+router.put(
   "/:username/med_history/:id",
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
