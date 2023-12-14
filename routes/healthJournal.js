@@ -27,12 +27,7 @@ router.get(
   async function (req, res, next) {
     try {
       const health_journal = await HealthJournals.get(req.params.username);
-      if (health_journal.length === 0) {
-        // Assuming findAll returns an empty array if no records are found
-        return res
-          .status(404)
-          .json({ error: "User not found or no medication history" });
-      }
+
       return res.json({ health_journal });
     } catch (err) {
       return next(err);
@@ -70,7 +65,7 @@ router.post(
   }
 );
 
-router.patch(
+router.put(
   "/:username/health_journal",
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
