@@ -15,6 +15,7 @@ const usersRoutes = require("./routes/users");
 
 const medHistoryRoutes = require("./routes/medicationHistory");
 const healthJournalRoutes = require("./routes/healthJournal");
+const drugRoute = require("./routes/drug");
 
 const morgan = require("morgan");
 
@@ -32,6 +33,7 @@ app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/users", medHistoryRoutes);
 app.use("/users", healthJournalRoutes);
+app.use("/drug", drugRoute);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {

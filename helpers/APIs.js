@@ -7,42 +7,56 @@ const OpenAI = require("openai");
 require("dotenv").config();
 
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
+const drugAPI = process.env.DRUG_API_KEY;
 
 async function getNews() {
   try {
     // To query top headlines
     // All options passed to topHeadlines are optional, but you need to include at least one of them
     const response = newsapi.v2.everything({
-      q: "drug OR medication",
+      q: "drug OR medication OR pill",
       language: "en",
+      searchin: "title",
+      sortBy: "publishedAt",
     });
     return response;
   } catch (error) {
     return next(error);
   }
 }
-
 async function getDrugInfo(drug) {
   try {
-    const baseUrl = "https://api.fda.gov/drug/label.json?search=openfda.";
-    const encodedDrug = encodeURIComponent(drug); // URL encode the drug name
-    const types = ["brand_name", "generic_name"];
+    const baseUrl = `https://api.fda.gov/drug/label.json?api_key=${drugAPI}&search=openfda.`;
+    const encodedDrug = encodeURIComponent(drug);
 
-    for (let type of types) {
-      const url = `${baseUrl}${type}:${encodedDrug}&limit=1`;
-      console.log(`Searching for ${type}: ${url}`); // Log the URL for debugging
-      const res = await axios.get(url);
-
+    // Try searching for generic_name with .exact
+    let url = `${baseUrl}generic_name.exact:${encodedDrug}&limit=100`;
+    try {
+      let res = await axios.get(url);
       if (res.data && res.data.results && res.data.results.length > 0) {
-        return res.data.results[0];
+        return res.data.results;
       }
+    } catch (error) {
+      console.error("Error in generic_name search:", error);
+    }
+
+    // Try searching for brand_name without .exact
+    url = `${baseUrl}brand_name:${encodedDrug}&limit=100`;
+    try {
+      let res = await axios.get(url);
+      if (res.data && res.data.results && res.data.results.length > 0) {
+        return res.data.results;
+      }
+    } catch (error) {
+      console.error("Error in brand_name search:", error);
     }
 
     throw new Error("Drug information not found");
   } catch (error) {
-    // Handle errors, possibly logging them and re-throwing a user-friendly error
-    console.error("Error fetching drug information:", error);
-    throw new BadRequestError("Error fetching drug information");
+    console.error("Error in getDrugInfo function:", error);
+    throw new BadRequestError(
+      "Error fetching drug information, please check spelling and try again"
+    );
   }
 }
 

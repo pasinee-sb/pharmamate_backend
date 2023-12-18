@@ -19,20 +19,6 @@ router.get("/", async function (req, res, next) {
 router.get("/search", async function (req, res, next) {
   try {
     const drugInfo = await getDrugInfo(req.query.drug);
-    // const {
-    //   contraindications,
-    //   indications_and_usage,
-    //   openfda,
-    //   drug_interactions,
-    // } = response;
-
-    // //may extract these things later in the frontend, in openfda=> generic_name
-    // console.log({
-    //   contraindications,
-    //   indications_and_usage,
-    //   openfda,
-    //   drug_interactions,
-    // });
 
     return res.json({ response: drugInfo });
   } catch (error) {
