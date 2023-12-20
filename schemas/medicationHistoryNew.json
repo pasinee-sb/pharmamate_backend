@@ -8,8 +8,7 @@
         "maxLength": 25
       },
       "drugName": {
-        "type": "string",
-        "pattern": "^[a-z]+$"
+        "type": "string"
       },
       "status": {
         "type": "string",
