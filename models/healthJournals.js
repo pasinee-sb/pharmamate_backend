@@ -80,7 +80,7 @@ class HealthJournals {
     return health_journal;
   }
 
-  /** Delete given job from database; returns undefined.
+  /** Delete given health_journal from database; returns undefined.
    *
    * Throws NotFoundError if company not found.
    **/

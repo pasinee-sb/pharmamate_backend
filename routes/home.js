@@ -16,6 +16,8 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+//route get   /search?drug=<drugname>
+
 router.get("/search", async function (req, res, next) {
   try {
     const drugList = await getDrugList(req.query.drug);

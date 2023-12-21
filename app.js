@@ -1,6 +1,6 @@
 "use strict";
 
-/** Express app for jobly. */
+/** Express app for pharmamate */
 
 const express = require("express");
 const cors = require("cors");
@@ -10,9 +10,7 @@ const { NotFoundError } = require("./expressError");
 const { authenticateJWT } = require("./middleware/auth");
 const homeRoute = require("./routes/home");
 const authRoutes = require("./routes/auth");
-
 const usersRoutes = require("./routes/users");
-
 const medHistoryRoutes = require("./routes/medicationHistory");
 const healthJournalRoutes = require("./routes/healthJournal");
 const drugRoute = require("./routes/drug");
@@ -27,9 +25,7 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
 app.use("/", homeRoute);
-
 app.use("/auth", authRoutes);
-
 app.use("/users", usersRoutes);
 app.use("/users", medHistoryRoutes);
 app.use("/users", healthJournalRoutes);

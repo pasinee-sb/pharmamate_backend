@@ -61,7 +61,6 @@ class MedicationHistory {
            WHERE id = $1`,
       [id]
     );
-    console.log("I AM HERE");
 
     const medication_history = medicationRes.rows[0];
 
@@ -105,7 +104,7 @@ class MedicationHistory {
     return medication_history;
   }
 
-  /** Delete given job from database; returns undefined.
+  /** Delete given med id from database; returns undefined.
    *
    * Throws NotFoundError if company not found.
    **/
