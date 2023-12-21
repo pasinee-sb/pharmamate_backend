@@ -154,47 +154,49 @@ router.delete(
   }
 );
 
-router.post(
-  "/:username/med_history/drug_interaction",
-  ensureCorrectUserOrAdmin,
-  async (req, res) => {
-    try {
-      //input {"role":"user",
-      //  "content":"amlodipine colchicine"
-      // } =>  {
-      // 	"drug_interaction": "The drug pair is Amlodipine and Colchicine.\n\nSeverity: Moderate\n\nManagement: Monitor for signs and symptoms of toxicity such as vomiting, diarrhea, and numbness or tingling in the fingers and toes. If you are taking these medications together, your doctor may want to adjust the dose of your colchicine. \n\nPlease discuss this with your physician."
-      // }
+//** For use with OPEN AI assistants API==> this function and route is now replaced with chatBot widget on the frontend */
 
-      //create user session
-      const userSessions = new Map();
-      const { role, content } = req.body;
-      const { username } = req.params;
+// router.post(
+//   "/:username/med_history/drug_interaction",
+//   ensureCorrectUserOrAdmin,
+//   async (req, res) => {
+//     try {
+//       //input {"role":"user",
+//       //  "content":"amlodipine colchicine"
+//       // } =>  {
+//       // 	"drug_interaction": "The drug pair is Amlodipine and Colchicine.\n\nSeverity: Moderate\n\nManagement: Monitor for signs and symptoms of toxicity such as vomiting, diarrhea, and numbness or tingling in the fingers and toes. If you are taking these medications together, your doctor may want to adjust the dose of your colchicine. \n\nPlease discuss this with your physician."
+//       // }
 
-      //Function to associate current user to newly created assistantID and threadID to ensure the response goes back to the right user
+//       //create user session
+//       const userSessions = new Map();
+//       const { role, content } = req.body;
+//       const { username } = req.params;
 
-      async function startUserSession(username) {
-        const assistantId = await createDrugInteractionAssistant();
-        const threadId = await createThread();
-        userSessions.set(username, { assistantId, threadId });
-      }
+//       //Function to associate current user to newly created assistantID and threadID to ensure the response goes back to the right user
 
-      // Function to retrieve user's assistantId and threadId
-      function getUserSession(username) {
-        return userSessions.get(username);
-      }
-      await startUserSession(username);
-      const { assistantId, threadId } = getUserSession(username);
-      await addMessageToThread(threadId, { role, content });
+//       async function startUserSession(username) {
+//         const assistantId = await createDrugInteractionAssistant();
+//         const threadId = await createThread();
+//         userSessions.set(username, { assistantId, threadId });
+//       }
 
-      const runId = await runAssistant(threadId, assistantId);
-      const response = await getAssistantResponse(threadId, runId);
+//       // Function to retrieve user's assistantId and threadId
+//       function getUserSession(username) {
+//         return userSessions.get(username);
+//       }
+//       await startUserSession(username);
+//       const { assistantId, threadId } = getUserSession(username);
+//       await addMessageToThread(threadId, { role, content });
 
-      return res.json({ drug_interaction: response[0].content[0].text.value });
-    } catch (error) {
-      console.error("Error:", error);
-      res.status(500).send("Error processing drug interaction check");
-    }
-  }
-);
+//       const runId = await runAssistant(threadId, assistantId);
+//       const response = await getAssistantResponse(threadId, runId);
+
+//       return res.json({ drug_interaction: response[0].content[0].text.value });
+//     } catch (error) {
+//       console.error("Error:", error);
+//       res.status(500).send("Error processing drug interaction check");
+//     }
+//   }
+// );
 
 module.exports = router;
