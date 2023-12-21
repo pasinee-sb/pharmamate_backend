@@ -1,10 +1,12 @@
 const axios = require("axios");
 const { BadRequestError } = require("../expressError");
+require("dotenv").config();
 const NewsAPI = require("newsapi");
+
 const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
 
 const OpenAI = require("openai");
-require("dotenv").config();
+
 //*****FOR OPEN AI RUNNING FUNCTIONS****Now replaced with chatWidget tools@ oai-widget.com**///
 // const openai = new OpenAI(process.env.OPENAI_API_KEY);
 const drugAPI = process.env.DRUG_API_KEY;
