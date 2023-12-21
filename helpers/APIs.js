@@ -14,7 +14,7 @@ async function getNews() {
     // To query top headlines
     // All options passed to topHeadlines are optional, but you need to include at least one of them
     const response = newsapi.v2.everything({
-      q: "drug OR medication OR pill",
+      q: "drug OR medication OR pill OR pharma OR medical",
       language: "en",
       searchin: "title",
       sortBy: "publishedAt",
@@ -24,7 +24,7 @@ async function getNews() {
     return next(error);
   }
 }
-async function getDrugInfo(drug) {
+async function getDrugList(drug) {
   try {
     const baseUrl = `https://api.fda.gov/drug/label.json?api_key=${drugAPI}&search=openfda.`;
     const encodedDrug = encodeURIComponent(drug);
@@ -144,7 +144,7 @@ async function getAssistantResponse(threadId, runId) {
 
 module.exports = {
   getNews,
-  getDrugInfo,
+  getDrugList,
   createDrugInteractionAssistant,
   createThread,
   addMessageToThread,
