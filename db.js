@@ -4,11 +4,16 @@ let db;
 
 if (process.env.NODE_ENV === "production") {
   db = new Client({
+    //* uncomment below when in development environment */
+
     // host: "/var/run/postgresql/",
     // database: getDatabaseUri(),
     // ssl: {
     //   rejectUnauthorized: false,
     // },
+
+    //* uncomment below when in production environment */
+
     connectionString: getDatabaseUri(),
     ssl: {
       rejectUnauthorized: false,
@@ -16,9 +21,13 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   db = new Client({
-    // host: "/var/run/postgresql/",
-    // database: getDatabaseUri(),
-    connectionString: getDatabaseUri(),
+    //* uncomment below when in development environment */
+
+    host: "/var/run/postgresql/",
+    database: getDatabaseUri(),
+
+    //* uncomment below when in production environment */
+    // connectionString: getDatabaseUri(),
   });
 }
 
