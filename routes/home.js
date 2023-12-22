@@ -8,24 +8,14 @@ const axios = require("axios");
 
 // routes/home.js
 
-// router.get("/", async function (req, res, next) {
-//   try {
-//     const response = await fetchAllDrugNames();
-//     return res.json(response);
-//   } catch (err) {
-//     next(err); // Pass errors to error handler
-//   }
-// });
-
-// moved to front end
-// router.get("/", async function (req, res, next) {
-//   try {
-//     const response = await getNews();
-//     return res.json(response);
-//   } catch (err) {
-//     next(err); // Pass errors to error handler
-//   }
-// });
+router.get("/", async function (req, res, next) {
+  try {
+    const response = await getNews();
+    return res.json(response);
+  } catch (err) {
+    next(err); // Pass errors to error handler
+  }
+});
 
 //route get   /search?drug=<drugname>
 
