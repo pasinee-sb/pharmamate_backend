@@ -23,11 +23,11 @@ if (process.env.NODE_ENV === "production") {
   db = new Client({
     //* uncomment below when in development environment */
 
-    host: "/var/run/postgresql/",
-    database: getDatabaseUri(),
+    // host: "/var/run/postgresql/",
+    // database: getDatabaseUri(),
 
-    //* uncomment below when in production environment */
-    // connectionString: getDatabaseUri(),
+    // * uncomment below when in production environment */
+    connectionString: getDatabaseUri(),
   });
 }
 

@@ -1,31 +1,7 @@
 const axios = require("axios");
 const { BadRequestError } = require("../expressError");
 require("dotenv").config();
-const NewsAPI = require("newsapi");
 
-const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
-
-const OpenAI = require("openai");
-
-//*****FOR OPEN AI RUNNING FUNCTIONS****Now replaced with chatWidget tools@ oai-widget.com**///
-// const openai = new OpenAI(process.env.OPENAI_API_KEY);
-const drugAPI = process.env.DRUG_API_KEY;
-
-async function getNews() {
-  try {
-    // To query top headlines
-    // All options passed to topHeadlines are optional, but you need to include at least one of them
-    const response = newsapi.v2.everything({
-      q: "drug OR medication OR pill OR pharma OR medical",
-      language: "en",
-      searchin: "title",
-      sortBy: "publishedAt",
-    });
-    return response;
-  } catch (error) {
-    return next(error);
-  }
-}
 async function getDrugList(drug) {
   try {
     const baseUrl = `https://api.fda.gov/drug/label.json?api_key=${drugAPI}&search=openfda.`;
@@ -145,8 +121,8 @@ async function getDrugList(drug) {
 // }
 
 module.exports = {
-  getNews,
   getDrugList,
+
   // createDrugInteractionAssistant,
   // createThread,
   // addMessageToThread,
