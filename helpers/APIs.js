@@ -33,7 +33,7 @@ async function getDrugList(drug) {
     const encodedDrug = encodeURIComponent(drug);
 
     // Try searching for generic_name with .exact
-    let url = `${baseUrl}generic_name.exact:${encodedDrug}&limit=100`;
+    let url = `${baseUrl}generic_name.exact:"${encodedDrug}"&limit=100`;
     try {
       let res = await axios.get(url);
       if (res.data && res.data.results && res.data.results.length > 0) {
