@@ -82,7 +82,7 @@ class HealthJournals {
 
   /** Delete given health_journal from database; returns undefined.
    *
-   * Throws NotFoundError if company not found.
+   * Throws NotFoundError if health_journal not found.
    **/
 
   static async remove(username) {

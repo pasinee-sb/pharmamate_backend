@@ -86,10 +86,10 @@ router.get(
 
 /** PATCH /[username] { user } => { user }
  *
- * Data can include:
- *   { firstName, lastName, password, email }
+ * Data :
+ *   {  password}
  *
- * Returns { username, firstName, lastName, email, isAdmin }
+ * Returns { username }
  *
  * Authorization required: admin or same-user-as-:username
  **/
@@ -99,7 +99,6 @@ router.put(
   ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      console.log(`This is backend route, I am here`);
       const validator = jsonschema.validate(req.body, userUpdateSchema);
       if (!validator.valid) {
         const errs = validator.errors.map((e) => e.stack);

@@ -1,6 +1,6 @@
 "use strict";
 
-/** Express app for pharmamate */
+/** Express app for PharmaMate */
 
 const express = require("express");
 const cors = require("cors");
