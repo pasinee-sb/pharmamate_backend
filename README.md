@@ -54,11 +54,7 @@ PharmaMate is an application designed to offer simplified access to essential me
 nodemon server.js
 ```
 
-## Deployment
-To deploy this project, run:
-```
-nodemon server.js
-```
+
 
 ## Environment Variables
 Add the following environment variables to your `.env` file:
