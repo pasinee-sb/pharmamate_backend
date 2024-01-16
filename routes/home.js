@@ -3,7 +3,11 @@
 const express = require("express");
 const router = new express.Router();
 
-const { getNews, getDrugList } = require("../helpers/APIs");
+const {
+  getNews,
+  getDrugList,
+  getDrugAutoComplete,
+} = require("../helpers/APIs");
 const axios = require("axios");
 
 // routes/home.js
@@ -14,6 +18,18 @@ router.get("/", async function (req, res, next) {
     return res.json(response);
   } catch (err) {
     next(err); // Pass errors to error handler
+  }
+});
+
+//route get   /autocomplete?searchValue=<searchValue>
+
+router.get("/autocomplete", async function (req, res, next) {
+  try {
+    const drugList = await getDrugAutoComplete(req.query.searchValue);
+
+    return res.json({ response: drugList });
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -27,6 +27,18 @@ async function getNews() {
   }
 }
 
+async function getDrugAutoComplete(searchValue) {
+  try {
+    const res = await axios.get(
+      `https://dailymed.nlm.nih.gov/dailymed/services/v2/drugnames.json?drug_name=${searchValue}`
+    );
+
+    return res.data.data;
+  } catch (error) {
+    return next(error);
+  }
+}
+
 async function getDrugList(drug) {
   try {
     const baseUrl = `https://api.fda.gov/drug/label.json?api_key=${drugAPI}&search=openfda.`;
@@ -148,6 +160,7 @@ async function getDrugList(drug) {
 module.exports = {
   getNews,
   getDrugList,
+  getDrugAutoComplete,
 
   // createDrugInteractionAssistant,
   // createThread,
