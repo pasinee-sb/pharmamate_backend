@@ -8,7 +8,6 @@ const {
   getDrugList,
   getDrugAutoComplete,
 } = require("../helpers/APIs");
-const axios = require("axios");
 
 // routes/home.js
 

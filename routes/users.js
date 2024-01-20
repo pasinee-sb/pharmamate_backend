@@ -9,8 +9,6 @@ const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const User = require("../models/user");
 const MedicationHistory = require("../models/medicationHistory");
-const medicationHistoryNewSchema = require("../schemas/medicationHistoryNew.json");
-const medicationHistoryUpdateSchema = require("../schemas/medicationHistoryUpdate.json");
 
 const { createToken } = require("../helpers/tokens");
 const userNewSchema = require("../schemas/userNew.json");
@@ -25,7 +23,7 @@ const router = express.Router();
  * admin.
  *
  * This returns the newly created user and an authentication token for them:
- *  {user: { username, firstName, lastName, email, isAdmin }, token }
+ *  {user: { username, isAdmin }, token }
  *
  * Authorization required: admin
  **/
